@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+  .running {
+    animation-play-state: running;
+  }
+}
+
+@keyframes left {
+  0% {
+    transform: translateX(-90%);
+  }
+  25% {
+    transform: translateX(-50%);
+  }
+  50% {
+    transform: translateX(-10%);
+  }
+  75% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(-90%);
+  }
+}
+
+@keyframes right {
+  0% {
+    transform: translateX(0%);
+  }
+  25% {
+    transform: translateX(-40%);
+  }
+  50% {
+    transform: translateX(-80%);
+  }
+  75% {
+    transform: translateX(-40%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
