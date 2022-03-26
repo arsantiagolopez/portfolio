@@ -6,4 +6,4 @@
 
 Rebuilt, updated and refactored with TypeScript & Next.js.
 
-[Check it out!](https://alexandersantiago.com){target="\_blank"}
+<a href="https://alexandersantiago.com" target="_blank">Check it out!</a>
