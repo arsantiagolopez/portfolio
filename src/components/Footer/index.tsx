@@ -13,7 +13,7 @@ const Footer: FC<Props> = () => {
       const middle = phone.splice(-3);
       const area = phone.splice(-3);
       const extension = phone;
-      return `${extension} (${area}) ${middle}-${last}`.replaceAll(",", "");
+      return `${extension} (${area}) ${middle}-${last}`.replace(/,/g, "");
     }
   };
 
