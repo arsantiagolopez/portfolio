@@ -20,7 +20,7 @@ const HomePage: NextPage<Props> = ({ tech, projects }) => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>{process.env.NEXT_PUBLIC_NAME}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>

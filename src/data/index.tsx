@@ -55,6 +55,7 @@ const detailedProjects: DetailedProject[] = [
       "Next.js",
       "Tailwind CSS",
       "IPFS http client",
+      "MetaMask",
       "NFT.storage",
       "React Hook Form",
       "React Three Fiber",
@@ -82,7 +83,8 @@ const detailedProjects: DetailedProject[] = [
       "Polygon Mumbai testnet contract deployment",
       "IPFS image hosting",
       "NFT.storage",
-      "Hardhat & Ethers.js",
+      "Hardhat",
+      "Ethers.js",
       "Alchemy",
       "Mocha/Chai testing",
       "Vercel frontend deployment",
@@ -310,9 +312,69 @@ const detailedProjects: DetailedProject[] = [
 
 const tech: Tech[] = [
   {
+    name: "solidity",
+    label: "Solidity",
+    width: 50,
+  },
+  {
+    name: "hardhat",
+    label: "Hardhat",
+    width: 250,
+  },
+  {
+    name: "metamask",
+    label: "MetaMask",
+    width: 300,
+  },
+  {
+    name: "ethers",
+    label: "Ethers.js",
+    width: 90,
+  },
+  {
+    name: "open",
+    label: "Open Zeppelin",
+    width: 60,
+  },
+  {
+    name: "ipfs",
+    label: "IPFS",
+    width: 150,
+  },
+  {
+    name: "polygon",
+    label: "Polygon",
+    width: 80,
+  },
+  {
+    name: "mocha",
+    label: "Mocha",
+    width: 75,
+  },
+  {
+    name: "chai",
+    label: "Chai",
+    width: 75,
+  },
+  {
+    name: "typescript",
+    label: "TypeScript",
+    width: 200,
+  },
+  {
+    name: "tailwind",
+    label: "Tailwind CSS",
+    width: 90,
+  },
+  {
+    name: "nest",
+    label: "NestJS",
+    width: 80,
+  },
+  {
     name: "nodejs",
     label: "Node.js",
-    width: 100,
+    width: 120,
   },
   {
     name: "react",
@@ -322,7 +384,7 @@ const tech: Tech[] = [
   {
     name: "nextjs",
     label: "Next.js",
-    width: 100,
+    width: 120,
   },
   {
     name: "gatsby",
@@ -347,7 +409,7 @@ const tech: Tech[] = [
   {
     name: "mongodb",
     label: "MongoDB",
-    width: 190,
+    width: 220,
   },
   {
     name: "vercel",
@@ -397,12 +459,12 @@ const tech: Tech[] = [
   {
     name: "passport",
     label: "Passport.js",
-    width: 75,
+    width: 60,
   },
   {
     name: "sendgrid",
     label: "Sendgrid Mail",
-    width: 190,
+    width: 220,
   },
   {
     name: "vultr",
