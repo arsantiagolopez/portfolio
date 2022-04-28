@@ -7,7 +7,7 @@ const Projects = () => (
       Some of my recent projects
     </p>
 
-    <div className="flex flex-col md:flex-row justify-center items-center w-screen px-[10vw] py-[5vh] md:py-[7vh] md:pt-[5vh]">
+    <div className="flex flex-col md:flex-row justify-center md:gap-8 items-center w-screen px-[10vw] py-[5vh] md:py-[7vh] md:pt-[5vh]">
       {projects.map(({ name, alt, href }) => (
         <a
           key={name}
@@ -19,8 +19,12 @@ const Projects = () => (
           <img
             src={`/projects/${name}.png`}
             alt={alt}
-            className={`object-contain h-9 md:mx-8 my-6 md:my-5 ${
-              name === "flavors"
+            className={`object-contain h-9 my-6 md:my-5 ${
+              name === "maize"
+                ? "h-12"
+                : name === "model"
+                ? "h-16 md:pt-2"
+                : name === "flavors"
                 ? "py-1.5 md:py-2"
                 : name === "instaccounts"
                 ? "py-0.5"
