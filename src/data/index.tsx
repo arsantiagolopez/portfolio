@@ -59,6 +59,8 @@ const detailedProjects: DetailedProject[] = [
     height: "4.5vh",
     href: "trimarketplace.vercel.app",
     github: "https://github.com/arsantiagolopez/marketplace",
+    desktopVideo: "",
+    mobileVideo: "",
     description:
       "Full stack Dapp Marketplace. Solidity, Hardhat, Typescript, React & Next.js. Beautiful NFT marketplace solution built with the latest blockchain technology.",
     frontend: [
@@ -66,7 +68,7 @@ const detailedProjects: DetailedProject[] = [
       "React.js",
       "Next.js",
       "Tailwind CSS",
-      "IPFS http client",
+      "IPFS Http Client",
       "MetaMask",
       "NFT.Storage",
       "React Hook Form",
@@ -110,8 +112,10 @@ const detailedProjects: DetailedProject[] = [
     height: "6vh",
     href: "maizepicks.vercel.app",
     github: "https://github.com/arsantiagolopez/picks",
+    desktopVideo: "https://www.youtube.com/embed/vVZw7afVYsI",
+    mobileVideo: "https://www.youtube.com/embed/Swv1_iX51YE",
     description:
-      "A platform to post daily sports betting picks. Stats like profits, ROI, streaks tracked over intervals of time and beautifully displayed on graphs.",
+      "A platform to post daily sports betting picks. Stats like profits, ROI, streaks, and many more tracked over intervals of time.",
     frontend: [
       "TypeScript",
       "React.js",
@@ -146,6 +150,8 @@ const detailedProjects: DetailedProject[] = [
     height: "6vh",
     href: "themodel.vercel.app",
     github: "https://github.com/arsantiagolopez/model",
+    desktopVideo: "https://www.youtube.com/embed/psdlIRTQsX4",
+    mobileVideo: "https://www.youtube.com/embed/0qrMD7X2Wfw",
     description:
       "Tennis model to display, analize and predict upcoming ATP, WTA and ITF matches. Stats like surface records, form, home court advantage, ELOs and others are calculated.",
     frontend: [
@@ -178,10 +184,11 @@ const detailedProjects: DetailedProject[] = [
   {
     id: 4,
     name: "instaccounts",
-    label: "Instaccounts  – current",
+    label: "Instaccounts",
     height: "4vh",
-    href: "",
     github: "https://github.com/arsantiagolopez/instaccounts",
+    desktopVideo: "https://www.youtube.com/embed/cL9Dhw_SpO4",
+    mobileVideo: "https://www.youtube.com/embed/cL9Dhw_SpO4",
     description:
       "Instaccounts is a solution to organically grow your instagram. Manage multiple accounts, interact with target audiences, preview posts, and much more.",
     frontend: [
@@ -216,7 +223,7 @@ const detailedProjects: DetailedProject[] = [
     devops: [
       "Docker",
       "Docker Compose",
-      "Self-hostet frontend",
+      "Self-hosted frontend",
       "Self-hosted backend",
     ],
   },
@@ -224,11 +231,13 @@ const detailedProjects: DetailedProject[] = [
   {
     id: 5,
     name: "flavors",
-    label: "Flavors – current",
+    label: "Flavors",
     height: "2.5vh",
     href: "www.tryflavors.com",
     github:
       "https://gitfront.io/r/arsantiagolopez/5a99dd9761551bcf30a1ea63660f73ab718a949e/flavors/",
+    desktopVideo: "https://www.youtube.com/embed/GgkOGRpQj7I",
+    mobileVideo: "https://www.youtube.com/embed/5NlSDRaR01U",
     description: "",
     frontend: [
       "React.js",
@@ -272,6 +281,8 @@ const detailedProjects: DetailedProject[] = [
     height: "6vh",
     href: "www.whofights.today",
     github: "https://github.com/arsantiagolopez/whofightstoday",
+    desktopVideo: "https://www.youtube.com/embed/iucUzoCZU9A",
+    mobileVideo: "https://www.youtube.com/embed/HlScccXq2Tc",
     description: "",
     frontend: [
       "React.js",
@@ -293,6 +304,8 @@ const detailedProjects: DetailedProject[] = [
     height: "4.5vh",
     href: "www.preppy.golf",
     github: "https://github.com/arsantiagolopez/preppy",
+    desktopVideo: "",
+    mobileVideo: "",
     description: "",
     frontend: [
       "React.js",
@@ -327,6 +340,8 @@ const detailedProjects: DetailedProject[] = [
     height: "3vh",
     href: "www.auth.golf",
     github: "https://github.com/arsantiagolopez/auth",
+    desktopVideo: "https://www.youtube.com/embed/6_-P5502tsA",
+    mobileVideo: "https://www.youtube.com/embed/2EjoyqJBdoU",
     description: "",
     frontend: [
       "React.js",
@@ -366,7 +381,10 @@ const detailedProjects: DetailedProject[] = [
     height: "4vh",
     href: "www.slide.golf",
     github: "https://github.com/arsantiagolopez/slide",
-    description: "",
+    desktopVideo: "https://www.youtube.com/embed/6OGhnJwZwUs",
+    mobileVideo: "https://www.youtube.com/embed/z8yW3kxNv2M",
+    description:
+      "Fast, simple, secure messaging between users. Start a conversation with any user in the platform. Add them as friends, and get notified on incoming messages.",
     frontend: [
       "React.js",
       "Next.js",

@@ -17,7 +17,7 @@ const Landing: FC<Props> = ({ tech, projects }) => {
         About me
       </p>
       <p>
-        I&apos;m a full stack javascript developer with an eye for design. My
+        I&apos;m a full stack TypeScript developer with an eye for design. My
         current favorite technologies are: React.js, TypeScript, Node.js and
         PostgreSQL. I love innovation and picked up my current tech stack to
         take advantage of the newest and best in the web.

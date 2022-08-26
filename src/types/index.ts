@@ -9,8 +9,10 @@ export interface DetailedProject {
   name: string;
   label: string;
   height: string;
-  href: string;
+  href?: string;
   github: string;
+  desktopVideo: string;
+  mobileVideo: string;
   description: string;
   frontend: string[];
   backend: string[];

@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { detailedProjects as data } from "../../data";
 import { DetailedProject } from "../../types";
+import { VideoModal } from "../VideoModal";
 
 interface Props {
   projects: string[];
@@ -17,6 +18,10 @@ const TechPerProject: FC<Props> = ({ projects }) => {
   const [projectsHash, setProjectsHash] = useState<
     Record<string, DetailedProject>
   >({});
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  // Open video modal
+  const handleClick = (name: string) => setActiveVideo(name);
 
   // Turn projects data into hashmap
   useEffect(() => {
@@ -42,6 +47,8 @@ const TechPerProject: FC<Props> = ({ projects }) => {
     }
   }, [projects, projectsHash]);
 
+  const videoModalProps = {};
+
   return (
     <div className="flex flex-col items-center w-full">
       <p className="text-lg text-primary font-semibold py-[7vh] md:pt-[9vh] pb-[7vh]">
@@ -55,6 +62,8 @@ const TechPerProject: FC<Props> = ({ projects }) => {
             height,
             href,
             github,
+            mobileVideo,
+            desktopVideo,
             description,
             frontend,
             backend,
@@ -90,24 +99,50 @@ const TechPerProject: FC<Props> = ({ projects }) => {
               </div>
 
               <div>
-                <a
-                  href={`https://${href}`}
-                  className="underline mr-3"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {href}
-                </a>
-                |
+                {href && (
+                  <>
+                    <a
+                      href={`https://${href}`}
+                      className="underline mr-3 hover:text-neutral-900"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      {href}
+                    </a>
+                    |
+                  </>
+                )}
                 <a
                   href={github}
-                  className="underline ml-3"
+                  className={`underline hover:text-neutral-900 ${
+                    href ? "mx-3" : "mr-3"
+                  }`}
                   rel="noreferrer"
                   target="_blank"
                 >
                   See the code
-                  {name === "flavors" && " (private)"}
+                  {name === "winners" && " (private)"}
                 </a>
+                |
+                <VideoModal
+                  Button={
+                    <span className="underline mx-3 hover:text-neutral-900">
+                      Mobile demo
+                    </span>
+                  }
+                  project={{ label, mobileVideo }}
+                  {...videoModalProps}
+                />
+                |
+                <VideoModal
+                  Button={
+                    <span className="underline ml-3 hover:text-neutral-900">
+                      Desktop demo
+                    </span>
+                  }
+                  project={{ label, desktopVideo }}
+                  {...videoModalProps}
+                />
               </div>
             </div>
           )
