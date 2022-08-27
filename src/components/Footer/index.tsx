@@ -44,18 +44,18 @@ const Footer: FC<Props> = () => {
         </p>
         <div className="flex flex-row items-center">
           <a
-            href={process.env.NEXT_PUBLIC_INSTAGRAM}
-            rel="noreferrer"
-            target="_blank"
-          >
-            <RiInstagramFill className="text-4xl hover:text-gray-400" />
-          </a>
-          <a
             href={process.env.NEXT_PUBLIC_GITHUB}
             rel="noreferrer"
             target="_blank"
           >
             <RiGithubFill className="mx-2 text-4xl hover:text-gray-400" />
+          </a>
+          <a
+            href={process.env.NEXT_PUBLIC_INSTAGRAM}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <RiInstagramFill className="text-4xl hover:text-gray-400" />
           </a>
           <a
             href={process.env.NEXT_PUBLIC_LINKEDIN}
