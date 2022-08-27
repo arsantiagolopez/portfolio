@@ -123,26 +123,30 @@ const TechPerProject: FC<Props> = ({ projects }) => {
                   See the code
                   {name === "winners" && " (private)"}
                 </a>
-                |
-                <VideoModal
-                  Button={
-                    <span className="underline mx-3 hover:text-neutral-900">
-                      Mobile demo
-                    </span>
-                  }
-                  project={{ label, mobileVideo }}
-                  {...videoModalProps}
-                />
-                |
-                <VideoModal
-                  Button={
-                    <span className="underline ml-3 hover:text-neutral-900">
-                      Desktop demo
-                    </span>
-                  }
-                  project={{ label, desktopVideo }}
-                  {...videoModalProps}
-                />
+                {name !== "tri" && (
+                  <>
+                    <span className="mr-3">|</span>
+                    <VideoModal
+                      Button={
+                        <span className="underline mr-3 hover:text-neutral-900">
+                          Mobile demo
+                        </span>
+                      }
+                      project={{ label, mobileVideo }}
+                      {...videoModalProps}
+                    />
+                    |
+                    <VideoModal
+                      Button={
+                        <span className="underline ml-3 hover:text-neutral-900">
+                          Desktop demo
+                        </span>
+                      }
+                      project={{ label, desktopVideo }}
+                      {...videoModalProps}
+                    />
+                  </>
+                )}
               </div>
             </div>
           )

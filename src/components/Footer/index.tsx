@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import { IoCall, IoMail } from "react-icons/io5";
-import { RiGithubFill, RiInstagramFill } from "react-icons/ri";
+import {
+  RiGithubFill,
+  RiInstagramFill,
+  RiLinkedinBoxFill,
+} from "react-icons/ri";
 
 interface Props {}
 
@@ -39,11 +43,26 @@ const Footer: FC<Props> = () => {
           Socials
         </p>
         <div className="flex flex-row items-center">
-          <a href={process.env.NEXT_PUBLIC_INSTAGRAM}>
-            <RiInstagramFill className="mx-1 mr-2 text-4xl hover:text-gray-400" />
+          <a
+            href={process.env.NEXT_PUBLIC_INSTAGRAM}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <RiInstagramFill className="text-4xl hover:text-gray-400" />
           </a>
-          <a href={process.env.NEXT_PUBLIC_GITHUB}>
-            <RiGithubFill className="mx-1 text-4xl hover:text-gray-400" />
+          <a
+            href={process.env.NEXT_PUBLIC_GITHUB}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <RiGithubFill className="mx-2 text-4xl hover:text-gray-400" />
+          </a>
+          <a
+            href={process.env.NEXT_PUBLIC_LINKEDIN}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <RiLinkedinBoxFill className="text-[2.5rem] hover:text-gray-400" />
           </a>
         </div>
       </div>

@@ -47,9 +47,10 @@ const VideoModal: FC<Props> = ({ Button, project }) => {
           <iframe
             src={mobileVideo || desktopVideo}
             // @ts-ignore
-            frameborder="0"
+            frameBorder="0"
             allow="fullscreen; autoplay;"
-            allowfullscreen="allowfullscreen"
+            // @ts-ignore
+            allowFullScreen="allowfullscreen"
             title={label}
             className="left-0 top-0 h-full w-full absolute"
           />

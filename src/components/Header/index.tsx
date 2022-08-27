@@ -1,5 +1,9 @@
 import React, { FC } from "react";
-import { RiGithubFill, RiInstagramFill } from "react-icons/ri";
+import {
+  RiGithubFill,
+  RiInstagramFill,
+  RiLinkedinBoxFill,
+} from "react-icons/ri";
 
 interface Props {}
 
@@ -32,7 +36,14 @@ const Header: FC<Props> = () => (
         rel="noreferrer"
         target="_blank"
       >
-        <RiInstagramFill className="text-2xl md:text-2xl ml-3 md:ml-1 cursor-pointer hover:text-primary" />
+        <RiInstagramFill className="text-2xl md:text-2xl mx-3 md:mx-2 cursor-pointer hover:text-primary" />
+      </a>
+      <a
+        href={process.env.NEXT_PUBLIC_LINKEDIN}
+        rel="noreferrer"
+        target="_blank"
+      >
+        <RiLinkedinBoxFill className="text-[1.7rem] cursor-pointer hover:text-primary" />
       </a>
     </div>
   </div>
