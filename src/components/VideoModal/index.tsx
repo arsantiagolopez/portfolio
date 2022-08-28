@@ -17,6 +17,12 @@ const VideoModal: FC<Props> = ({ Button, project }) => {
 
   const title = `${label} – ${mobileVideo ? "Mobile" : "Desktop"} Video Demo`;
 
+  const activeVideoSrc = mobileVideo
+    ? mobileVideo
+    : desktopVideo
+    ? desktopVideo
+    : null;
+
   return (
     <>
       <button onClick={handleOpen}>{Button}</button>
@@ -44,16 +50,18 @@ const VideoModal: FC<Props> = ({ Button, project }) => {
       >
         {/* Video*/}
         <div className="w-full overflow-hidden relative h-0 pb-[56.25%]">
-          <iframe
-            src={mobileVideo || desktopVideo}
-            // @ts-ignore
-            frameBorder="0"
-            allow="fullscreen; autoplay;"
-            // @ts-ignore
-            allowFullScreen="allowfullscreen"
-            title={label}
-            className="left-0 top-0 h-full w-full absolute"
-          />
+          {activeVideoSrc && (
+            <iframe
+              src={activeVideoSrc}
+              // @ts-ignore
+              frameBorder="0"
+              allow="fullscreen; autoplay;"
+              // @ts-ignore
+              allowFullScreen="allowfullscreen"
+              title={label}
+              className="left-0 top-0 h-full w-full absolute"
+            />
+          )}
         </div>
       </div>
     </>

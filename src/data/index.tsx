@@ -188,7 +188,7 @@ const detailedProjects: DetailedProject[] = [
     height: "4vh",
     github: "https://github.com/arsantiagolopez/instaccounts",
     desktopVideo: "https://www.youtube.com/embed/cL9Dhw_SpO4",
-    mobileVideo: "https://www.youtube.com/watch?v=-bXJNH-8XtA",
+    mobileVideo: "https://www.youtube.com/embed/-bXJNH-8XtA",
     description:
       "Instaccounts is a solution to organically grow your instagram. Manage multiple accounts, interact with target audiences, preview posts, and much more.",
     frontend: [
@@ -304,8 +304,8 @@ const detailedProjects: DetailedProject[] = [
     height: "4.5vh",
     href: "www.preppy.golf",
     github: "https://github.com/arsantiagolopez/preppy",
-    desktopVideo: "https://www.youtube.com/watch?v=Ce8l6RW3rn8",
-    mobileVideo: "https://www.youtube.com/watch?v=0cvWwuMm_MM",
+    desktopVideo: "https://www.youtube.com/embed/Ce8l6RW3rn8",
+    mobileVideo: "https://www.youtube.com/embed/0cvWwuMm_MM",
     description: "",
     frontend: [
       "React.js",
