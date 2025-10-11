@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./colors.css";
+@import "./globals.css";

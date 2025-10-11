@@ -1,3 +1,4 @@
+import type { Route } from "./+types/root";
 import {
   isRouteErrorResponse,
   Links,
@@ -5,10 +6,12 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
-
-import type { Route } from "./+types/root";
-import "./app.css";
+import { AppLayout } from "./components/app-layout";
+import { getTheme, type Theme } from "./lib/utils/theme.server";
+import { ThemeScript, getSystemTheme } from "./lib/utils/theme-script";
+import "./styles/index.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -23,10 +26,27 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export async function loader({ request }: Route.LoaderArgs) {
+  const systemTheme = getSystemTheme(request);
+  const userPreference = await getTheme(request);
+
+  return {
+    theme: userPreference,
+    systemTheme,
+  };
+}
+
+function Document({
+  children,
+  theme = "light",
+}: {
+  children: React.ReactNode;
+  theme?: Theme;
+}) {
   return (
-    <html lang="en">
+    <html lang="en" className={theme}>
       <head>
+        <ThemeScript />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
@@ -41,8 +61,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+  // Use user preference if set, otherwise use system theme
+  const theme = data?.theme || data?.systemTheme?.theme || "light";
+
+  return <Document theme={theme}>{children}</Document>;
+}
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

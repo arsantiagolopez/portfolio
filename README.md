@@ -1,87 +1,116 @@
-# Welcome to React Router!
+# Portfolio
 
-A modern, production-ready template for building full-stack React applications using React Router.
+A modern, full-stack portfolio application built with React Router 7, featuring a scalable design system and comprehensive dark mode support.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Tech Stack
+
+- **React Router 7** - Full-stack React framework with SSR
+- **TypeScript** - Type-safe development
+- **Tailwind CSS v4** - Utility-first styling
+- **shadcn/ui** - Accessible, composable components
+- **Vite** - Fast build tooling
 
 ## Features
 
+- 🎨 Scalable design system with modular CSS architecture
+- 🌓 Advanced dark mode with system preference detection
+- ♿️ Accessible components built on Radix UI
 - 🚀 Server-side rendering
 - ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🔒 Type-safe by default
+- 📦 Optimized production builds
 
 ## Getting Started
 
+### Prerequisites
+
+- Node.js 18+ or Bun
+- pnpm (recommended) or npm
+
 ### Installation
 
-Install the dependencies:
-
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
 
-Start the development server with HMR:
-
 ```bash
-npm run dev
+pnpm dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Application runs at `http://localhost:5173`
 
-## Building for Production
-
-Create a production build:
+### Build
 
 ```bash
-npm run build
+pnpm build
 ```
+
+## Documentation
+
+- [Design System](./docs/design-system.md) - Architecture, theming, and styling patterns
+
+## Project Structure
+
+```
+app/
+├── components/        # React components
+│   └── ui/           # shadcn/ui components
+├── lib/              # Utilities and helpers
+│   └── utils/        # Shared utility functions
+├── routes/           # File-based routing
+│   └── resources/    # API/resource routes
+└── styles/           # Modular CSS organization
+    ├── index.css     # Main entry point
+    ├── colors.css    # Theme colors
+    ├── fonts.css     # Typography
+    ├── tokens.css    # Design tokens
+    └── globals.css   # Global styles
+
+docs/                 # Documentation
+```
+
+## Design System
+
+The application uses a modular design system built on:
+- CSS custom properties for theming
+- OKLCH color space for perceptual uniformity
+- Semantic color tokens that adapt to light/dark modes
+- Scalable component architecture
+
+See [Design System Documentation](./docs/design-system.md) for details.
+
+## Dark Mode
+
+Features a hybrid dark mode implementation:
+- Automatic system theme detection
+- Manual theme selection (light/dark/system)
+- Live updates when OS theme changes
+- No flash of incorrect theme
+- Cookie-based persistence
 
 ## Deployment
 
-### Docker Deployment
-
-To build and run using Docker:
+### Docker
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+docker build -t portfolio .
+docker run -p 3000:3000 portfolio
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
-
+Compatible with:
 - AWS ECS
 - Google Cloud Run
 - Azure Container Apps
-- Digital Ocean App Platform
 - Fly.io
 - Railway
+- Digital Ocean
 
-### DIY Deployment
+### Node.js
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Deploy the build output (`build/client` and `build/server`) to any Node.js hosting platform.
 
 ---
 
-Built with ❤️ using React Router.
+Built with React Router 7
