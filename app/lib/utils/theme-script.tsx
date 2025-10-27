@@ -11,7 +11,7 @@ export function getSystemTheme(request: Request): { theme: Theme } {
   };
 }
 
-// Script that detects system theme preference and syncs it with cookies
+// Detects system theme preference and syncs it with cookies
 export function ThemeScript() {
   return (
     <script
