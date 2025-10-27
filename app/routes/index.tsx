@@ -1,5 +1,6 @@
+import { Logo } from "~/components/logo";
+import { HorizontalScrollSection } from "~/components/horizontal-scroll-section";
 import type { Route } from "./+types/index";
-import { ThemeToggle } from "~/components/theme-toggle";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -10,10 +11,42 @@ export function meta({}: Route.MetaArgs) {
 
 export default function IndexRoute() {
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-background p-4 text-foreground">
-      <h1 className="text-4xl font-bold">React Router 7 Starter</h1>
-      <p className="text-muted-foreground">Tailwind v4 + shadcn + Dark Mode</p>
-      <ThemeToggle />
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between w-full py-4 px-6">
+        <Logo />
+        <button className="text-lg font-medium">Say Hello</button>
+      </div>
+
+      <HorizontalScrollSection
+        contentAbove={
+          <section className="flex flex-col gap-4 px-16 py-16">
+            <div className="flex flex-col font-thin uppercase text-sm">
+              <p>Senior Software Engineer</p>
+              <p>Specializing in full-stack development & design systems.</p>
+            </div>
+
+            <div className="flex flex-col text-6xl tracking-tight font-medium">
+              <p>Welcome!</p>
+              <p>From designers to</p>
+              <p>developers, we've</p>
+              <p>got you covered.</p>
+            </div>
+          </section>
+        }
+        contentBelow={
+          <section className="flex flex-col h-dvh min-h-dvh px-10 py-12">
+            <div className="size-full rounded-3xl bg-[#E63946]" />
+          </section>
+        }
+        slides={[
+          <div className="w-full h-full bg-[#E63946] rounded-3xl" />,
+          <div className="w-full h-full bg-[#1A1A1A] rounded-3xl" />,
+          <div className="w-full h-full bg-[#E63946] rounded-3xl" />,
+          <div className="w-full h-full bg-[#1A1A1A] rounded-3xl" />,
+          <div className="w-full h-full bg-[#E63946] rounded-3xl" />,
+          <div className="w-full h-full bg-[#1A1A1A] rounded-3xl" />,
+        ]}
+      />
     </div>
   );
 }

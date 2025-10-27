@@ -11,7 +11,6 @@ export async function action({ request }: Route.ActionArgs) {
     return new Response("Invalid theme", { status: 400 });
   }
 
-  // Redirect back to trigger a full page reload for system theme
   return redirect(referer, {
     headers: {
       "Set-Cookie": await setTheme(theme),
