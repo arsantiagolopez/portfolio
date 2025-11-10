@@ -18,7 +18,7 @@ export function ChatMessage({
   if (isUser) {
     return (
       <div className="group/message flex flex-col gap-2 items-end">
-        <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 backdrop-blur-[8px]">
+        <div className="bg-primary text-primary-foreground rounded-lg px-4 py-2 backdrop-blur-md">
           {message.parts.map((part, index) => {
             if (part.type === "text") {
               return (
@@ -38,7 +38,7 @@ export function ChatMessage({
   }
 
   return (
-    <div className="group/message flex flex-col gap-2 text-glass-foreground">
+    <div className="group/message flex flex-col gap-2">
       {message.parts.map((part, index) => {
         if (part.type === "text") {
           return (

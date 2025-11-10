@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router";
+import { useNavigate, useLocation, useSearchParams } from "react-router";
 import { cn } from "~/lib/utils";
 import { Kbd, KbdGroup } from "./ui/kbd";
 import { Button } from "./ui/button";
@@ -13,6 +13,7 @@ export function FloatingChartInterface() {
     stop,
     isLoading = false,
     userMessageHistory = [],
+    mode = "chat",
   } = useChatContext();
   const [input, setInput] = useState("");
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -20,8 +21,18 @@ export function FloatingChartInterface() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [_, setSearchParams] = useSearchParams();
 
-  const isOnAiRoute = location.pathname === "/ai";
+  const isChatRoute = location.pathname === "/chat";
+
+  const toggleMode = () => {
+    const newMode = mode === "chat" ? "video" : "chat";
+    if (newMode === "video") {
+      setSearchParams({ mode: "video" }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -36,8 +47,8 @@ export function FloatingChartInterface() {
       });
     }
 
-    if (!isOnAiRoute) {
-      navigate("/ai", { viewTransition: true });
+    if (!isChatRoute) {
+      navigate("/chat", { viewTransition: true });
     }
 
     setInput("");
@@ -108,8 +119,9 @@ export function FloatingChartInterface() {
     <form
       onSubmit={handleSubmit}
       className={cn(
-        "relative items-center grid rounded-2xl max-h-16 transition-all duration-300 bg-input/50 backdrop-blur-md outline-none focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]",
-        isOnAiRoute ? "w-full max-w-3xl" : "min-w-80 max-w-3xl"
+        "relative items-center grid rounded-2xl max-h-16 max-w-3xl bg-glass backdrop-blur-md outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]",
+        "transition-all duration-300 ease-in-out",
+        isChatRoute ? "min-w-3xl" : "min-w-80"
       )}
     >
       <textarea
@@ -126,27 +138,46 @@ export function FloatingChartInterface() {
       <span
         className={cn(
           "absolute right-3",
-          !isOnAiRoute && !input && "right-5 pointer-events-none"
+          !isChatRoute && !input && "right-5 pointer-events-none"
         )}
       >
-        {isOnAiRoute ? (
-          <Button
-            type={isLoading ? "button" : "submit"}
-            variant="ghost"
-            size="icon"
-            disabled={!isLoading && !input}
-            onClick={isLoading ? stop : undefined}
-            className="group"
-          >
-            {isLoading ? (
-              <>
-                <Spinner className="group-hover:hidden" />
-                <Icon name="x" className="hidden group-hover:block" />
-              </>
-            ) : (
-              <Icon name="right-arrow" />
-            )}
-          </Button>
+        {isChatRoute ? (
+          input ? (
+            <Button
+              type={isLoading ? "button" : "submit"}
+              variant="ghost"
+              size="icon"
+              disabled={isLoading}
+              onClick={isLoading ? stop : undefined}
+              className="group"
+            >
+              {isLoading ? (
+                <>
+                  <Spinner className="group-hover:hidden" />
+                  <Icon name="x" className="hidden group-hover:block" />
+                </>
+              ) : (
+                <Icon name="right-arrow" />
+              )}
+            </Button>
+          ) : (
+            <div className="flex gap-1">
+              <Button variant="ghost" size="icon">
+                <Icon name="voice" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleMode}
+                className={cn(
+                  mode === "video" &&
+                    "bg-white text-black dark:text-black dark:hover:bg-white/90"
+                )}
+              >
+                <Icon name="video" />
+              </Button>
+            </div>
+          )
         ) : input ? (
           <Button type="submit" variant="ghost" size="icon">
             <Icon name="right-arrow" />

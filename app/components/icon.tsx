@@ -3,6 +3,8 @@ import RightArrowIcon from "~/assets/icons/right-arrow.svg?react";
 import XIcon from "~/assets/icons/x.svg?react";
 import CopyIcon from "~/assets/icons/copy.svg?react";
 import CheckIcon from "~/assets/icons/check.svg?react";
+import VoiceIcon from "~/assets/icons/voice.svg?react";
+import VideoIcon from "~/assets/icons/video.svg?react";
 
 const icons = {
   "left-arrow": LeftArrowIcon,
@@ -10,6 +12,8 @@ const icons = {
   x: XIcon,
   copy: CopyIcon,
   check: CheckIcon,
+  voice: VoiceIcon,
+  video: VideoIcon,
 } as const;
 
 export function Icon({

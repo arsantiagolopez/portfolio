@@ -8,9 +8,9 @@ import {
 export default [
   index("routes/index.tsx"),
 
-  ...prefix("ai", [
-    index("routes/ai/_index.tsx"),
-    route("chat", "routes/ai/chat.tsx"),
+  ...prefix("chat", [
+    index("routes/chat/_index.tsx"),
+    route("action", "routes/chat/action.tsx"),
   ]),
 
   // Theme setting resource route

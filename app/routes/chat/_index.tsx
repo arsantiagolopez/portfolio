@@ -1,7 +1,7 @@
 import { Chat } from "~/components/chat";
 import { useChatContext } from "~/lib/context/chat-context";
 
-export default function AiRoute() {
+export default function ChatRoute() {
   const { messages = [], status } = useChatContext();
 
   if (!status) {
@@ -12,5 +12,5 @@ export default function AiRoute() {
 }
 
 export function meta() {
-  return [{ title: "AI Chat | Portfolio" }];
+  return [{ title: "Chat | Portfolio" }];
 }

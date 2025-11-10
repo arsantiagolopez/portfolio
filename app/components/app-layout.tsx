@@ -9,11 +9,19 @@ import { ChatContext } from "~/lib/context/chat-context";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const isOnAiRoute = location.pathname.startsWith("/ai");
+  const isChatRoute = location.pathname.startsWith("/chat");
+  const searchParams = new URLSearchParams(location.search);
+  const modeParam = searchParams.get("mode");
+
+  const mode = isChatRoute
+    ? modeParam === "video"
+      ? "video"
+      : "chat"
+    : "chat";
 
   const chatHook = useChat({
     transport: new DefaultChatTransport({
-      api: "/ai/chat",
+      api: "/chat/action",
     }),
     onFinish: () => {
       // @todo – Add analytics or other post-completion logic here
@@ -48,22 +56,46 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       status: chatHook.status,
       isLoading,
       userMessageHistory,
-    };
+      mode,
+    } as const;
   }, [
     chatHook.messages,
     chatHook.sendMessage,
     chatHook.stop,
     chatHook.status,
     userMessageHistory,
+    mode,
   ]);
 
   return (
     <ChatContext.Provider value={contextValue}>
       <div className="bg-background size-full min-h-dvh transition-colors ease-in-out duration-500">
         {children}
+        {mode === "video" && (
+          <div className="fixed inset-0 z-0 flex items-center justify-center">
+            {/* <img
+              src="/assets/images/video-call/santorini.avif"
+              alt="Video call background"
+              className="absolute size-full object-cover"
+            /> */}
+            <video
+              src="/assets/videos/video-call-waiting.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute size-full object-bottom object-cover"
+            />
+            {/* <img
+              src="/assets/images/video-call/me.avif"
+              alt="Video call avatar"
+              className="absolute size-full object-cover"
+            /> */}
+          </div>
+        )}
         <div className="fixed flex items-center justify-center bottom-10 w-full z-50">
           <FloatingChartInterface />
-          <ThemeToggle className="absolute right-10" />
+          {!isChatRoute && <ThemeToggle className="absolute right-10" />}
         </div>
       </div>
     </ChatContext.Provider>
