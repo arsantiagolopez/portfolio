@@ -1,11 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
-import gsap from "gsap";
-import ScrollTriggerPlugin from "gsap/ScrollTrigger";
 import { cn } from "~/lib/utils";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTriggerPlugin);
-}
 
 export function HorizontalScrollSection({
   slides,
@@ -29,22 +23,33 @@ export function HorizontalScrollSection({
 
     if (!wrapper || !horizontal) return;
 
-    const ctx = gsap.context(() => {
-      const scrollWidth = horizontal.scrollWidth - window.innerWidth + 40; // 20 padding on each side
+    let ctx: ReturnType<typeof import("gsap").gsap.context> | undefined;
 
-      gsap.to(horizontal, {
-        x: -scrollWidth,
-        ease: "none",
-        scrollTrigger: {
-          trigger: wrapper,
-          start: "15% top",
-          end: () => `+=${scrollWidth}`,
-          scrub: 1,
-          pin: true,
-          pinSpacing: true,
-        },
-      });
-    }, wrapper);
+    const initGsap = async () => {
+      const { default: gsap } = await import("gsap");
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        const scrollWidth = horizontal.scrollWidth - window.innerWidth + 40;
+
+        gsap.to(horizontal, {
+          x: -scrollWidth,
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "15% top",
+            end: () => `+=${scrollWidth}`,
+            scrub: 1,
+            pin: true,
+            pinSpacing: true,
+          },
+        });
+      }, wrapper);
+    };
+
+    initGsap();
 
     return () => {
       ctx?.revert();
