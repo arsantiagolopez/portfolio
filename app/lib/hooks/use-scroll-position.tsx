@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
-export function useScrollToBottom() {
+export function useScrollPosition() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
+  const [isAtTop, setIsAtTop] = useState(true);
   const shouldAutoScrollRef = useRef(true);
 
-  const scrollToBottom = (behavior: ScrollBehavior = "instant") => {
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = "instant") => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -13,12 +14,17 @@ export function useScrollToBottom() {
       top: container.scrollHeight,
       behavior,
     });
-  };
+  }, []);
 
-  const enableAutoScroll = () => {
-    shouldAutoScrollRef.current = true;
-    scrollToBottom("instant");
-  };
+  const scrollToTop = useCallback((behavior: ScrollBehavior = "instant") => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.scrollTo({
+      top: 0,
+      behavior,
+    });
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -30,15 +36,25 @@ export function useScrollToBottom() {
       return isBottom;
     };
 
+    const checkIfAtTop = () => {
+      const { scrollTop } = container;
+      return scrollTop === 0;
+    };
+
     const handleScroll = () => {
       const atBottom = checkIfAtBottom();
+      const atTop = checkIfAtTop();
       setIsAtBottom(atBottom);
+      setIsAtTop(atTop);
       shouldAutoScrollRef.current = atBottom;
     };
 
     const mutationObserver = new MutationObserver(() => {
       if (shouldAutoScrollRef.current) {
-        requestAnimationFrame(() => scrollToBottom("instant"));
+        requestAnimationFrame(() => {
+          scrollToBottom("instant");
+          handleScroll();
+        });
       }
     });
 
@@ -53,12 +69,13 @@ export function useScrollToBottom() {
       container.removeEventListener("scroll", handleScroll);
       mutationObserver.disconnect();
     };
-  }, []);
+  }, [scrollToBottom]);
 
   return {
     containerRef,
     isAtBottom,
+    isAtTop,
     scrollToBottom,
-    enableAutoScroll,
+    scrollToTop,
   };
 }

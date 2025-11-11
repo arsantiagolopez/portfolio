@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 import { Streamdown } from "streamdown";
 import { cn } from "~/lib/utils";
 
@@ -52,16 +52,20 @@ export function TypewriterText({
   }
 
   return (
-    <FormattedResponse className={className}>{displayedText}</FormattedResponse>
+    <FormattedResponse className={className} isAnimating={isStreaming}>
+      {displayedText}
+    </FormattedResponse>
   );
 }
 
 function FormattedResponse({
   children,
   className,
+  isAnimating = false,
 }: {
   children: string;
   className?: string;
+  isAnimating?: boolean;
 }) {
   return (
     <Streamdown
@@ -71,6 +75,7 @@ function FormattedResponse({
         className
       )}
       shikiTheme={["vesper", "catppuccin-latte"]}
+      isAnimating={isAnimating}
     >
       {children}
     </Streamdown>

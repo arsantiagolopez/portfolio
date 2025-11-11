@@ -34,7 +34,7 @@ export function FloatingChartInterface() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const message = input.trim();
@@ -54,11 +54,13 @@ export function FloatingChartInterface() {
     setInput("");
   };
 
-  const handleInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
+  const updateInput = (event: React.FormEvent<HTMLTextAreaElement>) => {
     setInput(event.currentTarget.value);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleTextareaKeys = (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
       event.currentTarget.form?.requestSubmit();
@@ -104,20 +106,20 @@ export function FloatingChartInterface() {
   };
 
   useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
+    const focusOnCmdK = (event: KeyboardEvent) => {
       if ((event.metaKey || event.ctrlKey) && event.key === "k") {
         event.preventDefault();
         textareaRef.current?.focus();
       }
     };
 
-    document.addEventListener("keydown", handleGlobalKeyDown);
-    return () => document.removeEventListener("keydown", handleGlobalKeyDown);
+    document.addEventListener("keydown", focusOnCmdK);
+    return () => document.removeEventListener("keydown", focusOnCmdK);
   }, []);
 
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={submitMessage}
       className={cn(
         "relative items-center grid rounded-2xl max-h-16 max-w-3xl bg-glass backdrop-blur-md outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]",
         "transition-all duration-300 ease-in-out",
@@ -128,9 +130,9 @@ export function FloatingChartInterface() {
         ref={textareaRef}
         name="message"
         value={input}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        className="col-start-1 row-start-1 h-full max-h-16 overflow-y-auto p-4 pl-5 pr-14 rounded-2xl resize-none max-w-3xl break-all outline-none placeholder:text-muted-foreground"
+        onInput={updateInput}
+        onKeyDown={handleTextareaKeys}
+        className="col-start-1 row-start-1 h-full max-h-16 overflow-y-auto p-4 pl-5 pr-14 rounded-2xl resize-none max-w-3xl break-words outline-none placeholder:text-muted-foreground"
         placeholder="Ask me anything"
         rows={1}
       />
@@ -157,7 +159,7 @@ export function FloatingChartInterface() {
                   <Icon name="x" className="hidden group-hover:block" />
                 </>
               ) : (
-                <Icon name="right-arrow" />
+                <Icon name="arrow-right" />
               )}
             </Button>
           ) : (
@@ -180,7 +182,7 @@ export function FloatingChartInterface() {
           )
         ) : input ? (
           <Button type="submit" variant="ghost" size="icon">
-            <Icon name="right-arrow" />
+            <Icon name="arrow-right" />
           </Button>
         ) : (
           <KbdGroup>

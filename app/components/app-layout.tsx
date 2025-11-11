@@ -70,14 +70,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <ChatContext.Provider value={contextValue}>
       <div className="bg-background size-full min-h-dvh transition-colors ease-in-out duration-500">
-        {children}
         {mode === "video" && (
           <div className="fixed inset-0 z-0 flex items-center justify-center">
-            {/* <img
-              src="/assets/images/video-call/santorini.avif"
-              alt="Video call background"
-              className="absolute size-full object-cover"
-            /> */}
             <video
               src="/assets/videos/video-call-waiting.mp4"
               autoPlay
@@ -86,13 +80,9 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               playsInline
               className="absolute size-full object-bottom object-cover"
             />
-            {/* <img
-              src="/assets/images/video-call/me.avif"
-              alt="Video call avatar"
-              className="absolute size-full object-cover"
-            /> */}
           </div>
         )}
+        {children}
         <div className="fixed flex items-center justify-center bottom-10 w-full z-50">
           <FloatingChartInterface />
           {!isChatRoute && <ThemeToggle className="absolute right-10" />}

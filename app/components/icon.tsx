@@ -1,5 +1,5 @@
-import LeftArrowIcon from "~/assets/icons/left-arrow.svg?react";
-import RightArrowIcon from "~/assets/icons/right-arrow.svg?react";
+import ArrowLeftIcon from "~/assets/icons/arrow-left.svg?react";
+import ArrowRightIcon from "~/assets/icons/arrow-right.svg?react";
 import XIcon from "~/assets/icons/x.svg?react";
 import CopyIcon from "~/assets/icons/copy.svg?react";
 import CheckIcon from "~/assets/icons/check.svg?react";
@@ -7,8 +7,8 @@ import VoiceIcon from "~/assets/icons/voice.svg?react";
 import VideoIcon from "~/assets/icons/video.svg?react";
 
 const icons = {
-  "left-arrow": LeftArrowIcon,
-  "right-arrow": RightArrowIcon,
+  "arrow-left": ArrowLeftIcon,
+  "arrow-right": ArrowRightIcon,
   x: XIcon,
   copy: CopyIcon,
   check: CheckIcon,

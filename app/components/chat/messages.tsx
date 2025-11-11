@@ -1,7 +1,7 @@
 import type { useChat } from "@ai-sdk/react";
-import { ChatMessage } from "./chat-message";
+import { Message } from "./message";
 
-export function ChatList({
+export function Messages({
   messages,
   status,
 }: Pick<ReturnType<typeof useChat>, "messages" | "status">) {
@@ -12,13 +12,12 @@ export function ChatList({
   return (
     <div className="flex flex-col gap-2 mx-auto max-w-3xl py-8">
       {messages.map((message, index) => (
-        <ChatMessage
+        <Message
           key={message.id}
           message={message}
           isLoading={isStreaming && index === messages.length - 1}
         />
       ))}
-
       {isThinking && <ThinkingMessage />}
     </div>
   );

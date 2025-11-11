@@ -10,7 +10,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   const theme = data?.theme || "system";
 
-  const handleClick = () => {
+  const toggleTheme = () => {
     const nextTheme =
       theme === "light" ? "dark" : theme === "dark" ? "system" : "light";
 
@@ -24,7 +24,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     <Button
       variant="outline"
       size="icon"
-      onClick={handleClick}
+      onClick={toggleTheme}
       aria-label={`Current theme: ${theme}. Click to change.`}
       className={cn(className)}
     >
