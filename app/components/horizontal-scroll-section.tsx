@@ -1,10 +1,10 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ScrollTriggerPlugin from "gsap/ScrollTrigger";
 import { cn } from "~/lib/utils";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTriggerPlugin);
 }
 
 export function HorizontalScrollSection({
