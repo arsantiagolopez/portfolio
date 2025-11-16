@@ -9,6 +9,7 @@ import {
   useLoaderData,
 } from "react-router";
 import { AppLayout } from "./components/app-layout";
+import { Toaster } from "./components/ui/sonner";
 import { getTheme, type Theme } from "./lib/utils/theme.server";
 import { ThemeScript, getSystemTheme } from "./lib/utils/theme-script";
 import "./styles/index.css";
@@ -54,6 +55,7 @@ function Document({
       </head>
       <body>
         {children}
+        <Toaster theme={theme} />
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -63,7 +65,6 @@ function Document({
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
-  // Use user preference if set, otherwise use system theme
   const theme = data?.theme || data?.systemTheme?.theme || "light";
 
   return <Document theme={theme}>{children}</Document>;

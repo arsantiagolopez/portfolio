@@ -1,6 +1,7 @@
 import { Logo } from "~/components/logo";
 import { HorizontalScrollSection } from "~/components/horizontal-scroll-section";
 import type { Route } from "./+types/index";
+import { Link } from "react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -39,12 +40,30 @@ export default function IndexRoute() {
           </section>
         }
         slides={[
-          <div className="w-full h-full bg-[#E63946] rounded-3xl" />,
-          <div className="w-full h-full bg-[#1A1A1A] rounded-3xl" />,
-          <div className="w-full h-full bg-[#E63946] rounded-3xl" />,
-          <div className="w-full h-full bg-[#1A1A1A] rounded-3xl" />,
-          <div className="w-full h-full bg-[#E63946] rounded-3xl" />,
-          <div className="w-full h-full bg-[#1A1A1A] rounded-3xl" />,
+          <Link
+            to="/chat?mode=video"
+            className="relative flex items-center justify-center size-full rounded-3xl overflow-hidden"
+            viewTransition
+          >
+            <img
+              src="/assets/images/video-call/santorini.avif"
+              alt="Video call background"
+              className="absolute size-full object-cover"
+            />
+            <img
+              src="/assets/images/video-call/me.avif"
+              alt="Video call avatar"
+              className="absolute size-full object-cover -mr-64"
+            />
+            <p className="absolute left-32 text-white text-3xl font-semibold tracking-tight">
+              Video chat with me.
+            </p>
+          </Link>,
+          <div className="size-full bg-[#1A1A1A] rounded-3xl" />,
+          <div className="size-full bg-[#E63946] rounded-3xl" />,
+          <div className="size-full bg-[#1A1A1A] rounded-3xl" />,
+          <div className="size-full bg-[#E63946] rounded-3xl" />,
+          <div className="size-full bg-[#1A1A1A] rounded-3xl" />,
         ]}
       />
     </div>
