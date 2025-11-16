@@ -23,7 +23,7 @@ export function Sidebar({
   return (
     <>
       <div
-        className="z-10 fixed left-0 top-0 bottom-0 w-px"
+        className="z-10 fixed left-0 top-0 bottom-0 md:w-px"
         onMouseEnter={() => setIsOpen(true)}
       />
 
@@ -31,8 +31,8 @@ export function Sidebar({
         variant="glass"
         onClick={toggleOpen}
         className={cn(
-          "z-10 fixed left-4 top-4 text-foreground transition-opacity duration-300 ease-in",
-          isOpen && "opacity-0 pointer-events-none"
+          "z-10 fixed top-4 right-4 md:left-4 text-foreground transition-opacity duration-300 ease-in",
+          isOpen && "md:opacity-0 pointer-events-none"
         )}
         iconProps={{
           className: cn(
@@ -46,16 +46,16 @@ export function Sidebar({
       <Portal>
         <div
           className={cn(
-            "z-50 fixed left-4 top-4 bottom-10 flex transition-transform will-change-transform",
+            "z-50 fixed inset-0 md:inset-auto md:left-4 md:top-4 md:bottom-10 flex transition-transform will-change-transform",
             isOpen ? "translate-x-0" : "-translate-x-[calc(100%+2rem)]"
           )}
         >
           <Card
             variant="glass"
-            className="w-sidebar-width h-full overflow-hidden p-0"
+            className="w-full md:w-sidebar-width h-full bg-background/50 md:bg-transparent rounded-none md:rounded-3xl overflow-hidden p-0"
           >
             <ScrollArea className="relative size-full text-foreground">
-              <div className="sticky top-0 flex justify-between p-3 shrink-0 bg-gradient-to-b from-background to-transparent">
+              <div className="sticky top-0 flex justify-between p-4 shrink-0 bg-gradient-to-b from-background to-transparent">
                 <h2 className="text-foreground text-lg font-medium">
                   {header}
                 </h2>
@@ -63,14 +63,14 @@ export function Sidebar({
                   variant="ghost"
                   onClick={toggleOpen}
                   className={cn(
-                    "text-foreground -m-1 transition-transform duration-300 ease-out",
+                    "text-foreground md:-m-1 transition-transform duration-300 ease-out",
                     isOpen &&
                       "animate-in slide-in-from-left-[calc(310px-100px)]"
                   )}
                 />
               </div>
 
-              <div className="px-3">{children}</div>
+              <div className="px-4">{children}</div>
             </ScrollArea>
           </Card>
         </div>

@@ -7,7 +7,6 @@ import { Icon } from "./icon";
 import { Spinner } from "./ui/spinner";
 import { useChatContext } from "~/lib/context/chat-context";
 import { LiquidGlass } from "./liquid-glass";
-import { useTheme } from "~/lib/hooks/use-theme";
 
 export function FloatingChatInput() {
   const {
@@ -24,7 +23,6 @@ export function FloatingChatInput() {
   const navigate = useNavigate();
   const location = useLocation();
   const [_, setSearchParams] = useSearchParams();
-  const theme = useTheme();
 
   const isChatRoute = location.pathname === "/chat";
   const isChatMode = mode === "chat";
@@ -124,31 +122,30 @@ export function FloatingChatInput() {
   return (
     <div
       className={cn(
-        "rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out max-w-3xl",
-        isChatRoute ? "min-w-3xl" : "min-w-80"
+        "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
+        isChatRoute ? "md:min-w-3xl" : "min-w-80"
       )}
     >
       <LiquidGlass className="size-full" radius={16}>
         <form
           onSubmit={submitMessage}
-          className="relative items-center grid rounded-2xl max-h-16 transition-normal duration-300 ease-in-out"
+          className="relative items-center grid rounded-2xl h-14 transition-normal duration-300 ease-in-out"
         >
           <textarea
             ref={textareaRef}
             name="message"
+            placeholder="Ask me anything"
             value={input}
             onInput={updateInput}
             onKeyDown={handleTextareaKeys}
+            rows={1}
             className={cn(
-              "col-start-1 row-start-1 h-full max-h-16 overflow-y-auto p-4 pl-5 pr-14 rounded-2xl resize-none max-w-3xl break-words outline-none",
+              "col-start-1 row-start-1 h-full p-4 pl-5 pr-14 rounded-2xl resize-none break-words outline-none",
               isChatMode
                 ? "placeholder:text-foreground/80"
                 : "text-white placeholder:text-white/80"
             )}
-            placeholder="Ask me anything"
-            rows={1}
           />
-
           <span
             className={cn(
               "absolute right-3",
@@ -158,13 +155,15 @@ export function FloatingChatInput() {
             {isChatRoute ? (
               input ? (
                 <Button
-                  data-theme={theme === "light" ? "dark" : "light"}
                   type={isLoading ? "button" : "submit"}
                   variant="ghost"
                   size="icon"
                   disabled={isLoading}
                   onClick={isLoading ? stop : undefined}
-                  className="group text-foreground"
+                  className={cn(
+                    "group",
+                    isChatMode ? "text-foreground" : "md:text-white"
+                  )}
                 >
                   {isLoading ? (
                     <>
@@ -185,7 +184,7 @@ export function FloatingChatInput() {
                     size="icon"
                     onClick={toggleMode}
                     className={cn(
-                      mode === "video" &&
+                      !isChatMode &&
                         "bg-white text-black dark:text-black dark:hover:bg-white/90"
                     )}
                   >
@@ -204,10 +203,9 @@ export function FloatingChatInput() {
               </KbdGroup>
             )}
           </span>
-
           <div
             aria-hidden="true"
-            className="col-start-1 row-start-1 max-h-16 invisible whitespace-pre-wrap p-4 pl-5 pr-14 pointer-events-none"
+            className="col-start-1 row-start-1 h-14 invisible whitespace-pre-wrap p-4 pl-5 pr-14 pointer-events-none"
           >
             {input}
           </div>

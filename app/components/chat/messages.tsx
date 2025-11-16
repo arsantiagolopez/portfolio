@@ -10,7 +10,7 @@ export function Messages({
   const isThinking = isStreaming && lastMessage?.role === "user";
 
   return (
-    <div className="flex flex-col gap-2 mx-auto max-w-3xl py-8">
+    <div className="flex flex-col gap-2 mx-auto max-w-3xl py-8 px-6 md:px-0">
       {messages.map((message, index) => (
         <Message
           key={message.id}

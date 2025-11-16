@@ -32,14 +32,19 @@ function Header() {
   const navigate = useNavigate();
   return (
     <div className="z-10 fixed top-0 w-full pt-4 pb-16 bg-gradient-to-b from-background to-transparent pointer-events-none">
-      <div className="max-w-3xl mx-auto text-foreground flex items-center gap-2">
+      <div className="max-w-3xl mx-auto text-foreground flex items-center gap-2 px-4 md:px-0">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            navigate(-1);
+            window.scrollTo(0, 0);
+          }}
           className="rounded-lg pointer-events-auto p-2 -ml-2"
         >
           <Icon name="arrow-left" />
         </button>
-        <h1 className="text-foreground text-4xl font-bold">AI Chat</h1>
+        <h1 className="text-foreground text-3xl md:text-4xl font-bold">
+          AI Chat
+        </h1>
       </div>
     </div>
   );
@@ -72,10 +77,10 @@ function ChatWithScroll({
       <div
         ref={scrollToBottomOnNavRef}
         className={cn(
-          "scroll-pb-28 pb-28 overflow-y-auto text-sm",
+          "scroll-pb-24 md:scroll-pb-28 pb-24 md:pb-28 overflow-y-auto text-sm pt-20",
           mode === "chat"
-            ? "pt-20 h-dvh"
-            : "max-h-[55dvh] pt-20 [mask-image:linear-gradient(to_bottom,transparent,black_8rem,black_calc(100%-8rem),transparent)]"
+            ? "h-dvh"
+            : "max-h-[55dvh] [mask-image:linear-gradient(to_bottom,transparent,black_8rem,black_calc(100%-8rem),transparent)]"
         )}
       >
         <Messages messages={messages} status={status} />
@@ -109,13 +114,13 @@ function ScrollButtons({
       <ScrollButton
         direction="bottom"
         onClick={() => scrollToBottom("smooth")}
-        className="z-10 absolute bottom-28 left-1/2 -translate-x-1/2 transition-colors"
+        className="z-10 absolute bottom-24 md:bottom-28 left-1/2 -translate-x-1/2 transition-colors"
       />
     ) : null;
   }
 
   return (
-    <div className="z-10 absolute bottom-28 left-1/2 -translate-x-1/2 flex gap-2">
+    <div className="z-10 absolute bottom-24 md:bottom-28 left-1/2 -translate-x-1/2 flex gap-2">
       <ScrollButton
         direction="top"
         isVisible={!isAtTop}

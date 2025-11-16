@@ -83,7 +83,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         )}
         {children}
-        <div className="z-40 fixed flex items-center justify-center bottom-10 w-full">
+        <div className="z-40 fixed flex items-center justify-center bottom-6 md:bottom-10 w-full">
           <FloatingChatInput />
           {!isChatRoute && <ThemeToggle className="absolute right-10" />}
         </div>

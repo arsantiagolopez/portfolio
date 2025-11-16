@@ -16,7 +16,7 @@ export function Message({
   if (isUser) {
     return (
       <div className="group/message flex flex-col gap-2 items-end">
-        <div className="bg-primary text-primary-foreground rounded-xl px-4 py-2.5">
+        <div className="bg-primary text-primary-foreground rounded-xl px-4 py-3 md:py-2.5">
           {message.parts.map((part, index) => {
             if (part.type === "text") {
               return (
@@ -59,7 +59,7 @@ export function Message({
 function ConditionalBubble({ children }: { children: ReactNode }) {
   const { mode } = useChatContext();
   return mode === "video" ? (
-    <div className="bg-background text-foreground rounded-xl px-4 py-2.5 min-h-10 w-fit">
+    <div className="bg-background text-foreground rounded-xl px-4 py-3 md:py-2.5 min-h-10 w-fit">
       {children}
     </div>
   ) : (
