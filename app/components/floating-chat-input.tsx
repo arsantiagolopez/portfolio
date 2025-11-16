@@ -19,7 +19,10 @@ export function FloatingChatInput() {
   const [input, setInput] = useState("");
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [tempInput, setTempInput] = useState("");
+  const [hasInitialized, setHasInitialized] = useState(false);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [_, setSearchParams] = useSearchParams();
@@ -119,11 +122,22 @@ export function FloatingChatInput() {
     return () => document.removeEventListener("keydown", focusOnCmdK);
   }, []);
 
+  useEffect(() => {
+    if (!isChatRoute && !hasInitialized) {
+      const timer = setTimeout(() => setHasInitialized(true), 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isChatRoute, hasInitialized]);
+
+  // @SAD-HACK – Vaso won't play nice with dynamic growth, so mount it expanded
+  // then shrink to initial state to allow the max width to be loaded.
+  const shouldForceMaxWidth = !isChatRoute && !hasInitialized;
+
   return (
     <div
       className={cn(
-        "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
-        isChatRoute ? "md:min-w-3xl" : "min-w-80"
+        "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-white focus-within:ring-white/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
+        isChatRoute || shouldForceMaxWidth ? "md:min-w-3xl" : "min-w-80"
       )}
     >
       <LiquidGlass className="size-full" radius={16}>
