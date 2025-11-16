@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router";
 import { useRef } from "react";
+import { useNavigate } from "react-router";
 import type { UIMessage } from "ai";
 import type { useChat } from "@ai-sdk/react";
 import { Messages } from "./messages";
@@ -7,6 +7,7 @@ import { useScrollPosition } from "~/lib/hooks/use-scroll-position";
 import { Icon } from "../icon";
 import { useChatContext } from "~/lib/context/chat-context";
 import { cn } from "~/lib/utils";
+import { ConversationList } from "./conversation-list";
 
 export function Chat({
   messages,
@@ -15,25 +16,31 @@ export function Chat({
   messages: UIMessage[];
   status: ReturnType<typeof useChat>["status"];
 }) {
-  const navigate = useNavigate();
-
   return (
     <div className="relative flex h-dvh flex-col">
-      <div className="z-10 fixed top-0 w-full pt-4 pb-16 bg-gradient-to-b from-background to-transparent pointer-events-none">
-        <div className="max-w-3xl mx-auto text-foreground flex items-center gap-2">
-          <button
-            onClick={() => navigate(-1)}
-            className="rounded-lg pointer-events-auto p-2 -ml-2"
-          >
-            <Icon name="arrow-left" />
-          </button>
-          <h1 className="text-foreground text-4xl font-bold">AI Chat</h1>
-        </div>
-      </div>
+      <Header />
+      <ConversationList />
 
       {messages.length > 0 && (
         <ChatWithScroll messages={messages} status={status} />
       )}
+    </div>
+  );
+}
+
+function Header() {
+  const navigate = useNavigate();
+  return (
+    <div className="z-10 fixed top-0 w-full pt-4 pb-16 bg-gradient-to-b from-background to-transparent pointer-events-none">
+      <div className="max-w-3xl mx-auto text-foreground flex items-center gap-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="rounded-lg pointer-events-auto p-2 -ml-2"
+        >
+          <Icon name="arrow-left" />
+        </button>
+        <h1 className="text-foreground text-4xl font-bold">AI Chat</h1>
+      </div>
     </div>
   );
 }
@@ -92,8 +99,8 @@ function ScrollButtons({
 }: {
   isAtTop: boolean;
   isAtBottom: boolean;
-  scrollToTop: (behavior?: ScrollBehavior) => void;
-  scrollToBottom: (behavior?: ScrollBehavior) => void;
+  scrollToTop: ReturnType<typeof useScrollPosition>["scrollToTop"];
+  scrollToBottom: ReturnType<typeof useScrollPosition>["scrollToBottom"];
 }) {
   const { mode } = useChatContext();
 

@@ -3,7 +3,7 @@ import { useLocation } from "react-router";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { toast } from "sonner";
-import { FloatingChartInterface } from "./floating-chat-interface";
+import { FloatingChatInput } from "./floating-chat-input";
 import { ThemeToggle } from "./theme-toggle";
 import { ChatContext } from "~/lib/context/chat-context";
 
@@ -83,8 +83,8 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         )}
         {children}
-        <div className="fixed flex items-center justify-center bottom-10 w-full z-50">
-          <FloatingChartInterface />
+        <div className="z-40 fixed flex items-center justify-center bottom-10 w-full">
+          <FloatingChatInput />
           {!isChatRoute && <ThemeToggle className="absolute right-10" />}
         </div>
       </div>

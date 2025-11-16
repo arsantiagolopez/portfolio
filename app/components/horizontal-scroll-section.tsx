@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { cn } from "~/lib/utils";
 
 export function HorizontalScrollSection({
@@ -7,52 +7,52 @@ export function HorizontalScrollSection({
   contentAbove,
   contentBelow,
 }: {
-  slides: React.ReactNode[];
+  slides: ReactNode[];
   className?: string;
-  contentAbove?: React.ReactNode;
-  contentBelow?: React.ReactNode;
+  contentAbove?: ReactNode;
+  contentBelow?: ReactNode;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const horizontalRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
+    if (!wrapperRef.current || !horizontalRef.current) return;
 
-    const wrapper = wrapperRef.current;
-    const horizontal = horizontalRef.current;
+    let isMounted = true;
 
-    if (!wrapper || !horizontal) return;
+    Promise.all([import("gsap"), import("gsap/ScrollTrigger")]).then(
+      ([{ default: gsap }, { ScrollTrigger }]) => {
+        if (!isMounted || !wrapperRef.current || !horizontalRef.current) return;
 
-    let ctx: ReturnType<typeof import("gsap").gsap.context> | undefined;
+        gsap.registerPlugin(ScrollTrigger);
 
-    const initGsap = async () => {
-      const { default: gsap } = await import("gsap");
-      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+        const ctx = gsap.context(() => {
+          const scrollWidth =
+            horizontalRef.current!.scrollWidth - window.innerWidth + 40;
 
-      gsap.registerPlugin(ScrollTrigger);
+          gsap.to(horizontalRef.current, {
+            x: -scrollWidth,
+            ease: "none",
+            scrollTrigger: {
+              trigger: wrapperRef.current,
+              start: "15% top",
+              end: () => `+=${scrollWidth}`,
+              scrub: 1,
+              pin: true,
+              pinSpacing: true,
+            },
+          });
+        }, wrapperRef.current);
 
-      ctx = gsap.context(() => {
-        const scrollWidth = horizontal.scrollWidth - window.innerWidth + 40;
-
-        gsap.to(horizontal, {
-          x: -scrollWidth,
-          ease: "none",
-          scrollTrigger: {
-            trigger: wrapper,
-            start: "15% top",
-            end: () => `+=${scrollWidth}`,
-            scrub: 1,
-            pin: true,
-            pinSpacing: true,
-          },
-        });
-      }, wrapper);
-    };
-
-    initGsap();
+        return () => {
+          if (!isMounted) ctx.revert();
+        };
+      }
+    );
 
     return () => {
-      ctx?.revert();
+      isMounted = false;
     };
   }, []);
 

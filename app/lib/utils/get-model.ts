@@ -26,6 +26,5 @@ function createOllamaModel(): LanguageModel {
 
 export function getModel(): LanguageModel {
   const isProduction = process.env.NODE_ENV === "production";
-  console.log("[getModel] NODE_ENV:", process.env.NODE_ENV, "isProduction:", isProduction);
   return isProduction ? createAnthropicModel() : createOllamaModel();
 }
