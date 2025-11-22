@@ -136,7 +136,7 @@ export function FloatingChatInput() {
   return (
     <div
       className={cn(
-        "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-white focus-within:ring-white/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
+        "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 bg-background/20 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-white focus-within:ring-white/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
         isChatRoute || shouldForceMaxWidth ? "md:min-w-3xl" : "min-w-80"
       )}
     >
@@ -148,6 +148,7 @@ export function FloatingChatInput() {
           <textarea
             ref={textareaRef}
             name="message"
+            aria-label="Chat message"
             placeholder="Ask me anything"
             value={input}
             onInput={updateInput}
@@ -172,6 +173,7 @@ export function FloatingChatInput() {
                   type={isLoading ? "button" : "submit"}
                   variant="ghost"
                   size="icon"
+                  aria-label={isLoading ? "Stop generating" : "Send message"}
                   disabled={isLoading}
                   onClick={isLoading ? stop : undefined}
                   className={cn(
@@ -190,12 +192,13 @@ export function FloatingChatInput() {
                 </Button>
               ) : (
                 <div className="flex gap-1">
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" aria-label="Voice input">
                     <Icon name="voice" />
                   </Button>
                   <Button
                     variant="ghost"
                     size="icon"
+                    aria-label={isChatMode ? "Switch to video mode" : "Switch to chat mode"}
                     onClick={toggleMode}
                     className={cn(
                       !isChatMode &&
