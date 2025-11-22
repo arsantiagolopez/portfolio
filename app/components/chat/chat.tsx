@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import type { UIMessage } from "ai";
 import type { useChat } from "@ai-sdk/react";
 import { Messages } from "./messages";
@@ -7,7 +7,8 @@ import { useScrollPosition } from "~/lib/hooks/use-scroll-position";
 import { Icon } from "../icon";
 import { useChatContext } from "~/lib/context/chat-context";
 import { cn } from "~/lib/utils";
-import { ConversationList } from "./conversation-list";
+import { ConversationList } from "../conversation-list";
+import { LiquidGlass } from "../liquid-glass";
 
 export function Chat({
   messages,
@@ -29,19 +30,16 @@ export function Chat({
 }
 
 function Header() {
-  const navigate = useNavigate();
   return (
     <div className="z-10 fixed top-0 w-full pt-4 pb-16 bg-gradient-to-b from-background to-transparent pointer-events-none">
       <div className="max-w-3xl mx-auto text-foreground flex items-center gap-2 px-4 md:px-0">
-        <button
-          onClick={() => {
-            navigate(-1);
-            window.scrollTo(0, 0);
-          }}
+        <Link
+          to="/"
           className="rounded-lg pointer-events-auto p-2 -ml-2"
+          viewTransition
         >
           <Icon name="arrow-left" />
-        </button>
+        </Link>
         <h1 className="text-foreground text-3xl md:text-4xl font-bold">
           AI Chat
         </h1>
@@ -149,25 +147,33 @@ function ScrollButton({
   className?: string;
 }) {
   return (
-    <button
-      type="button"
-      aria-label={direction === "top" ? "Scroll to top" : "Scroll to bottom"}
+    <div
       className={cn(
-        "bg-background hover:bg-muted rounded-full border p-2 shadow-lg transition-all duration-300",
+        "transition-all duration-300",
         isVisible
           ? "opacity-100 scale-100 translate-x-0"
           : "opacity-0 scale-0 pointer-events-none",
         className
       )}
-      onClick={onClick}
     >
-      <Icon
-        name="arrow-left"
-        className={cn(
-          "size-4",
-          direction === "top" ? "rotate-90" : "-rotate-90"
-        )}
-      />
-    </button>
+      <LiquidGlass className="[&>div]:pointer-events-none" radius={32}>
+        <button
+          type="button"
+          aria-label={
+            direction === "top" ? "Scroll to top" : "Scroll to bottom"
+          }
+          className="size-full rounded-full shadow-lg p-2 bg-glass backdrop-blur-md hover:bg-glass/90"
+          onClick={onClick}
+        >
+          <Icon
+            name="arrow-left"
+            className={cn(
+              "size-4",
+              direction === "top" ? "rotate-90" : "-rotate-90"
+            )}
+          />
+        </button>
+      </LiquidGlass>
+    </div>
   );
 }

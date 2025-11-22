@@ -1,5 +1,6 @@
 import { createContext, useContext } from "react";
 import type { useChat } from "@ai-sdk/react";
+import type { Conversation } from "../services/conversations";
 
 type ChatMode = "chat" | "video";
 
@@ -8,7 +9,11 @@ type ChatContextType = Partial<
     isLoading: boolean;
     userMessageHistory: string[];
     mode: ChatMode;
-    setMode: (mode: ChatMode) => void;
+    conversations: Conversation[];
+    currentConversationId: string | null;
+    loadConversation: (id: string) => void;
+    deleteConversation: (id: string) => void;
+    startNewConversation: () => void;
   }
 >;
 
