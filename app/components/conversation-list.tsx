@@ -22,14 +22,16 @@ export function ConversationList() {
 
   return (
     <Sidebar header="Conversations" className="flex flex-col gap-px px-4">
-      <SidebarItem
-        aria-label="Create new conversation"
-        aria-selected={!currentConversationId}
-        onClick={startNewConversation}
-      >
-        <Icon name="add" />
-        New chat
-      </SidebarItem>
+      <div className="p-1">
+        <SidebarItem
+          aria-label="Create new conversation"
+          aria-selected={!currentConversationId}
+          onClick={startNewConversation}
+        >
+          <Icon name="add" />
+          New chat
+        </SidebarItem>
+      </div>
 
       <Accordion
         type="multiple"

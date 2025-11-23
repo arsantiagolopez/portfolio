@@ -6,7 +6,7 @@ import { cn } from "~/lib/utils";
 export function LiquidGlass({
   children,
   className = "",
-  radius = 16,
+  radius = 24,
   scale = -180,
   border = 0.07,
   lightness = 50,
@@ -14,7 +14,7 @@ export function LiquidGlass({
   blur = 11,
   displace = 0,
   backgroundBlur = 0,
-  backgroundOpacity = 0,
+  backgroundOpacity = 0.2,
   saturation = 1,
   xChannel = "R",
   yChannel = "G",
@@ -127,7 +127,11 @@ export function LiquidGlass({
 
   const containerStyles = supportsSvg
     ? {
-        background: `hsl(var(--background) / ${backgroundOpacity})`,
+        backgroundColor:
+          backgroundOpacity > 0
+            ? `color-mix(in srgb, var(--background) ${backgroundOpacity * 100}%, transparent)`
+            : "transparent",
+        borderRadius: `${radius}px`,
         backdropFilter:
           backgroundBlur > 0
             ? `url(#${filterId}) saturate(${saturation}) blur(${backgroundBlur}px)`
@@ -146,9 +150,9 @@ export function LiquidGlass({
         {
           "shadow-[0_0_2px_1px_color-mix(in_oklch,var(--foreground),transparent_85%)_inset,0_0_10px_4px_color-mix(in_oklch,var(--foreground),transparent_90%)_inset,0_4px_16px_rgba(17,17,26,0.05),0_8px_24px_rgba(17,17,26,0.05),0_16px_56px_rgba(17,17,26,0.05),0_4px_16px_rgba(17,17,26,0.05)_inset,0_8px_24px_rgba(17,17,26,0.05)_inset,0_16px_56px_rgba(17,17,26,0.05)_inset] dark:shadow-[0_0_2px_1px_color-mix(in_oklch,var(--foreground),transparent_65%)_inset,0_0_10px_4px_color-mix(in_oklch,var(--foreground),transparent_85%)_inset,0_4px_16px_rgba(17,17,26,0.05),0_8px_24px_rgba(17,17,26,0.05),0_16px_56px_rgba(17,17,26,0.05),0_4px_16px_rgba(17,17,26,0.05)_inset,0_8px_24px_rgba(17,17,26,0.05)_inset,0_16px_56px_rgba(17,17,26,0.05)_inset]":
             supportsSvg,
-          "backdrop-blur-xl backdrop-saturate-[1.8] backdrop-brightness-110 dark:backdrop-brightness-120 border border-foreground/20 bg-foreground/25 dark:bg-foreground/10 shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.4),inset_0_-1px_0_0_hsl(var(--foreground)/0.2)] dark:shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.2),inset_0_-1px_0_0_hsl(var(--foreground)/0.1)]":
+          "backdrop-blur-xl backdrop-saturate-[1.8] backdrop-brightness-110 dark:backdrop-brightness-120 border border-foreground/20 bg-foreground/25 dark:bg-foreground/10 shadow-[inset_0_1px_0_0_oklch(var(--foreground)/0.4),inset_0_-1px_0_0_oklch(var(--foreground)/0.2)] dark:shadow-[inset_0_1px_0_0_oklch(var(--foreground)/0.2),inset_0_-1px_0_0_oklch(var(--foreground)/0.1)]":
             !supportsSvg && supportsBackdropFilter,
-          "border border-foreground/30 dark:border-foreground/20 bg-foreground/40 dark:bg-background/40 shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.5),inset_0_-1px_0_0_hsl(var(--foreground)/0.3)] dark:shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.2),inset_0_-1px_0_0_hsl(var(--foreground)/0.1)]":
+          "border border-foreground/30 dark:border-foreground/20 bg-foreground/40 dark:bg-background/40 shadow-[inset_0_1px_0_0_oklch(var(--foreground)/0.5),inset_0_-1px_0_0_oklch(var(--foreground)/0.3)] dark:shadow-[inset_0_1px_0_0_oklch(var(--foreground)/0.2),inset_0_-1px_0_0_oklch(var(--foreground)/0.1)]":
             !supportsSvg && !supportsBackdropFilter,
         },
         FOCUS_OUTLINE_CLASSES,
