@@ -1,36 +1,27 @@
-"use client";
-
 import { type ReactNode, useEffect, useRef, useState, useId } from "react";
+import { FOCUS_OUTLINE_CLASSES } from "~/lib/contants";
+import { useIsMounted } from "~/lib/hooks/use-is-mounted";
+import { cn } from "~/lib/utils";
 
-/**
- * LiquidGlass - SVG displacement filter with chromatic aberration
- *
- * Creates a glass morphism effect with background warping and rainbow edges.
- *
- * ⚠️ Browser Support: This component uses `backdrop-filter: url()` with SVG filters,
- * which currently ONLY works in Chromium-based browsers (Chrome, Edge, Brave).
- * Does NOT work in Firefox or Safari.
- *
- * Inspiration: https://codepen.io/jh3y/pen/EajLxJV
- */
 export function LiquidGlass({
   children,
   className = "",
   radius = 16,
-  scale = -250,
-  border = 0.08,
-  lightness = 55,
-  alpha = 0.88,
-  blur = 12,
-  displace = 2,
+  scale = -180,
+  border = 0.07,
+  lightness = 50,
+  alpha = 0.93,
+  blur = 11,
+  displace = 0,
   backgroundBlur = 0,
-  saturation = 1.6,
+  backgroundOpacity = 0,
+  saturation = 1,
   xChannel = "R",
   yChannel = "G",
   blend = "difference",
-  r = -10,
-  g = 20,
-  b = 45,
+  r = 0,
+  g = 10,
+  b = 20,
 }: {
   children?: ReactNode;
   className?: string;
@@ -50,6 +41,8 @@ export function LiquidGlass({
   displace?: number;
   /* 0-30+ (px, background blur) */
   backgroundBlur?: number;
+  /* 0-1 (container background opacity) */
+  backgroundOpacity?: number;
   /* 0-2+ (saturation multiplier) */
   saturation?: number;
   /* R, G, or B */
@@ -62,8 +55,20 @@ export function LiquidGlass({
     | "multiply"
     | "screen"
     | "overlay"
+    | "darken"
+    | "lighten"
+    | "color-dodge"
+    | "color-burn"
+    | "hard-light"
+    | "soft-light"
     | "difference"
-    | "exclusion";
+    | "exclusion"
+    | "hue"
+    | "saturation"
+    | "color"
+    | "luminosity"
+    | "plus-darker"
+    | "plus-lighter";
   /* -100 to 100 (chromatic aberration red offset) */
   r?: number;
   /* -100 to 100 (chromatic aberration green offset) */
@@ -71,9 +76,12 @@ export function LiquidGlass({
   /* -100 to 100 (chromatic aberration blue offset) */
   b?: number;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 336, height: 96 });
-  const filterId = `liquid-glass-${useId().replace(/:/g, "")}`;
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isMounted = useIsMounted();
+
+  const filterId = `glass-${useId().replace(/:/g, "")}`;
 
   const borderWidth =
     Math.min(dimensions.width, dimensions.height) * (border * 0.5);
@@ -113,23 +121,43 @@ export function LiquidGlass({
     };
   }, []);
 
+  const supportsSvg = isMounted && supportsSVGFilters(filterId);
+  const supportsBackdropFilter =
+    isMounted && CSS.supports("backdrop-filter", "blur(10px)");
+
+  const containerStyles = supportsSvg
+    ? {
+        background: `hsl(var(--background) / ${backgroundOpacity})`,
+        backdropFilter:
+          backgroundBlur > 0
+            ? `url(#${filterId}) saturate(${saturation}) blur(${backgroundBlur}px)`
+            : `url(#${filterId}) saturate(${saturation})`,
+        WebkitBackdropFilter:
+          backgroundBlur > 0
+            ? `url(#${filterId}) saturate(${saturation}) blur(${backgroundBlur}px)`
+            : `url(#${filterId}) saturate(${saturation})`,
+      }
+    : undefined;
+
   return (
     <div
       ref={containerRef}
-      className={className}
-      style={{
-        backdropFilter:
-          backgroundBlur > 0
-            ? `url(#${filterId}) brightness(1.1) saturate(${saturation}) blur(${backgroundBlur}px)`
-            : `url(#${filterId}) brightness(1.1) saturate(${saturation})`,
-        WebkitBackdropFilter:
-          backgroundBlur > 0
-            ? `url(#${filterId}) brightness(1.1) saturate(${saturation}) blur(${backgroundBlur}px)`
-            : `url(#${filterId}) brightness(1.1) saturate(${saturation})`,
-      }}
+      className={cn(
+        {
+          "shadow-[0_0_2px_1px_color-mix(in_oklch,var(--foreground),transparent_85%)_inset,0_0_10px_4px_color-mix(in_oklch,var(--foreground),transparent_90%)_inset,0_4px_16px_rgba(17,17,26,0.05),0_8px_24px_rgba(17,17,26,0.05),0_16px_56px_rgba(17,17,26,0.05),0_4px_16px_rgba(17,17,26,0.05)_inset,0_8px_24px_rgba(17,17,26,0.05)_inset,0_16px_56px_rgba(17,17,26,0.05)_inset] dark:shadow-[0_0_2px_1px_color-mix(in_oklch,var(--foreground),transparent_65%)_inset,0_0_10px_4px_color-mix(in_oklch,var(--foreground),transparent_85%)_inset,0_4px_16px_rgba(17,17,26,0.05),0_8px_24px_rgba(17,17,26,0.05),0_16px_56px_rgba(17,17,26,0.05),0_4px_16px_rgba(17,17,26,0.05)_inset,0_8px_24px_rgba(17,17,26,0.05)_inset,0_16px_56px_rgba(17,17,26,0.05)_inset]":
+            supportsSvg,
+          "backdrop-blur-xl backdrop-saturate-[1.8] backdrop-brightness-110 dark:backdrop-brightness-120 border border-foreground/20 bg-foreground/25 dark:bg-foreground/10 shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.4),inset_0_-1px_0_0_hsl(var(--foreground)/0.2)] dark:shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.2),inset_0_-1px_0_0_hsl(var(--foreground)/0.1)]":
+            !supportsSvg && supportsBackdropFilter,
+          "border border-foreground/30 dark:border-foreground/20 bg-foreground/40 dark:bg-background/40 shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.5),inset_0_-1px_0_0_hsl(var(--foreground)/0.3)] dark:shadow-[inset_0_1px_0_0_hsl(var(--foreground)/0.2),inset_0_-1px_0_0_hsl(var(--foreground)/0.1)]":
+            !supportsSvg && !supportsBackdropFilter,
+        },
+        FOCUS_OUTLINE_CLASSES,
+        className
+      )}
+      style={containerStyles}
     >
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className="-z-10 absolute inset-0 size-full opacity-0"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
@@ -223,23 +251,63 @@ function buildDisplacementImage(
   blend: string
 ): string {
   const uniqueId = `${width}-${height}-${Date.now()}`;
-  const svg = `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="red-grad-${uniqueId}" x1="100%" y1="0%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#000"/>
-      <stop offset="100%" stop-color="red"/>
-    </linearGradient>
-    <linearGradient id="blue-grad-${uniqueId}" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#000"/>
-      <stop offset="100%" stop-color="blue"/>
-    </linearGradient>
-  </defs>
-  <rect x="0" y="0" width="${width}" height="${height}" fill="black"/>
-  <rect x="0" y="0" width="${width}" height="${height}" rx="${radius}" fill="url(#red-grad-${uniqueId})" />
-  <rect x="0" y="0" width="${width}" height="${height}" rx="${radius}" fill="url(#blue-grad-${uniqueId})" style="mix-blend-mode: ${blend}" />
-  <rect x="${border}" y="${border}" width="${width - border * 2}" height="${height - border * 2}" rx="${radius}" fill="hsl(0 0% ${lightness}% / ${alpha})" style="filter:blur(${blur}px)" />
-</svg>`;
+  const svg = `
+    <svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="red-grad-${uniqueId}" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#0000" />
+          <stop offset="100%" stop-color="red" />
+        </linearGradient>
+        <linearGradient id="blue-grad-${uniqueId}" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#0000" />
+          <stop offset="100%" stop-color="blue" />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="0" width="${width}" height="${height}" fill="black" />
+      <rect
+        x="0"
+        y="0"
+        width="${width}"
+        height="${height}"
+        rx="${radius}"
+        fill="url(#red-grad-${uniqueId})"
+      />
+      <rect
+        x="0"
+        y="0"
+        width="${width}"
+        height="${height}"
+        rx="${radius}"
+        fill="url(#blue-grad-${uniqueId})"
+        style="mix-blend-mode: ${blend}"
+      />
+      <rect
+        x="${border}"
+        y="${border}"
+        width="${width - border * 2}"
+        height="${height - border * 2}"
+        rx="${radius}"
+        fill="hsl(0 0% ${lightness}% / ${alpha})"
+        style="filter:blur(${blur}px)"
+      />
+    </svg>
+  `.trim();
 
   const encoded = encodeURIComponent(svg);
   return `data:image/svg+xml,${encoded}`;
+}
+
+function supportsSVGFilters(filterId: string) {
+  const isWebkit =
+    /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+  const isFirefox = /Firefox/.test(navigator.userAgent);
+
+  if (isWebkit || isFirefox) {
+    return false;
+  }
+
+  const div = document.createElement("div");
+  div.style.backdropFilter = `url(#${filterId})`;
+
+  return div.style.backdropFilter !== "";
 }

@@ -1,10 +1,14 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useSearchParams } from "react-router";
-import { conversationService, type Conversation } from "../services/conversations";
+import {
+  type Conversation,
+  conversationService,
+} from "../services/conversations";
 
 export function useConversations() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [conversations, setConversations] = useState<Conversation[]>([]);
+
   const conversationId = searchParams.get("id");
 
   // Load conversations on mount and set up listener
@@ -31,7 +35,10 @@ export function useConversations() {
     window.addEventListener("conversation-updated", handleCustomStorageChange);
     return () => {
       window.removeEventListener("storage", handleStorageChange);
-      window.removeEventListener("conversation-updated", handleCustomStorageChange);
+      window.removeEventListener(
+        "conversation-updated",
+        handleCustomStorageChange
+      );
     };
   }, []);
 

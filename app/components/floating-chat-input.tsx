@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { type ComponentProps, useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation, useSearchParams } from "react-router";
 import { cn } from "~/lib/utils";
 import { Kbd, KbdGroup } from "./ui/kbd";
@@ -8,7 +8,10 @@ import { Spinner } from "./ui/spinner";
 import { useChatContext } from "~/lib/context/chat-context";
 import { LiquidGlass } from "./liquid-glass";
 
-export function FloatingChatInput() {
+export function FloatingChatInput({
+  className,
+  ...props
+}: ComponentProps<"div">) {
   const {
     sendMessage,
     stop,
@@ -135,8 +138,10 @@ export function FloatingChatInput() {
     <div
       className={cn(
         "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 bg-background/20 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-white focus-within:ring-white/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
-        isChatRoute || isFirstMount ? "md:min-w-3xl" : "min-w-80"
+        isChatRoute || isFirstMount ? "md:min-w-3xl" : "min-w-80",
+        className
       )}
+      {...props}
     >
       <LiquidGlass className="size-full">
         <form
