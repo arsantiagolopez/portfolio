@@ -204,9 +204,11 @@ export function AppLayout({ children }: { children: ReactNode }) {
           </div>
         )}
         {children}
-        <div className="z-40 fixed flex items-center justify-center bottom-6 md:bottom-10 w-full">
-          <FloatingChatInput />
-          {!isChatRoute && <ThemeToggle className="absolute right-10" />}
+        <div className="z-40 fixed flex items-center justify-center bottom-6 md:bottom-10 w-full pointer-events-none">
+          <FloatingChatInput className="pointer-events-auto" />
+          {!isChatRoute && (
+            <ThemeToggle className="absolute right-10 pointer-events-auto" />
+          )}
         </div>
       </div>
     </ChatContext.Provider>
