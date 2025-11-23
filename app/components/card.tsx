@@ -25,11 +25,9 @@ export function Card({
   }) {
   if (variant === "glass") {
     return (
-      <div className={cn(cardVariants({ variant, className }))}>
-        <LiquidGlass className="size-full" radius={24}>
-          {children}
-        </LiquidGlass>
-      </div>
+      <LiquidGlass className={cn(cardVariants({ variant, className }))}>
+        {children}
+      </LiquidGlass>
     );
   }
 
