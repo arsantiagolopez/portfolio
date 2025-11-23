@@ -28,18 +28,24 @@ export function FloatingChatInput({
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [_, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const isChatRoute = location.pathname === "/chat";
   const isChatMode = mode === "chat";
 
   const toggleMode = () => {
     const newMode = isChatMode ? "video" : "chat";
-    if (newMode === "video") {
-      setSearchParams({ mode: "video" }, { replace: true });
-    } else {
-      setSearchParams({}, { replace: true });
-    }
+    setSearchParams(
+      (prev) => {
+        if (newMode === "video") {
+          prev.set("mode", "video");
+        } else {
+          prev.delete("mode");
+        }
+        return prev;
+      },
+      { replace: true }
+    );
   };
 
   const submitMessage = (event: React.FormEvent<HTMLFormElement>) => {
@@ -143,7 +149,7 @@ export function FloatingChatInput({
       )}
       {...props}
     >
-      <LiquidGlass className="size-full">
+      <LiquidGlass radius={16} className="size-full">
         <form
           onSubmit={submitMessage}
           className="relative items-center grid rounded-2xl h-14 transition-normal duration-300 ease-in-out"
