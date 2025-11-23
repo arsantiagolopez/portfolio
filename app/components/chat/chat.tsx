@@ -147,33 +147,29 @@ function ScrollButton({
   className?: string;
 }) {
   return (
-    <div
+    <LiquidGlass
       className={cn(
-        "transition-all duration-300",
+        "rounded-full [&>div]:pointer-events-none transition-all duration-300",
         isVisible
           ? "opacity-100 scale-100 translate-x-0"
           : "opacity-0 scale-0 pointer-events-none",
         className
       )}
     >
-      <LiquidGlass className="[&>div]:pointer-events-none" radius={32}>
-        <button
-          type="button"
-          aria-label={
-            direction === "top" ? "Scroll to top" : "Scroll to bottom"
-          }
-          className="size-full rounded-full shadow-lg p-2 bg-glass backdrop-blur-md hover:bg-glass/90"
-          onClick={onClick}
-        >
-          <Icon
-            name="arrow-left"
-            className={cn(
-              "size-4",
-              direction === "top" ? "rotate-90" : "-rotate-90"
-            )}
-          />
-        </button>
-      </LiquidGlass>
-    </div>
+      <button
+        type="button"
+        aria-label={direction === "top" ? "Scroll to top" : "Scroll to bottom"}
+        className="size-full rounded-full shadow-lg p-2 backdrop-blur-md hover:bg-glass/90"
+        onClick={onClick}
+      >
+        <Icon
+          name="arrow-left"
+          className={cn(
+            "size-4",
+            direction === "top" ? "rotate-90" : "-rotate-90"
+          )}
+        />
+      </button>
+    </LiquidGlass>
   );
 }

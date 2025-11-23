@@ -129,18 +129,16 @@ export function FloatingChatInput() {
     }
   }, [isChatRoute, hasInitialized]);
 
-  // @SAD-HACK – Vaso won't play nice with dynamic growth, so mount it expanded
-  // then shrink to initial state to allow the max width to be loaded.
-  const shouldForceMaxWidth = !isChatRoute && !hasInitialized;
+  const isFirstMount = !isChatRoute && !hasInitialized;
 
   return (
     <div
       className={cn(
         "w-[calc(100%-32px)] md:w-auto max-w-3xl h-14 bg-background/20 rounded-2xl overflow-hidden outline-none shadow-sm dark:shadow-2xl dark:shadow-foreground/5 focus-within:border-white focus-within:ring-white/50 focus-within:ring-[3px] transition-all duration-300 ease-in-out",
-        isChatRoute || shouldForceMaxWidth ? "md:min-w-3xl" : "min-w-80"
+        isChatRoute || isFirstMount ? "md:min-w-3xl" : "min-w-80"
       )}
     >
-      <LiquidGlass className="size-full" radius={16}>
+      <LiquidGlass className="size-full">
         <form
           onSubmit={submitMessage}
           className="relative items-center grid rounded-2xl h-14 transition-normal duration-300 ease-in-out"
@@ -198,7 +196,11 @@ export function FloatingChatInput() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    aria-label={isChatMode ? "Switch to video mode" : "Switch to chat mode"}
+                    aria-label={
+                      isChatMode
+                        ? "Switch to video mode"
+                        : "Switch to chat mode"
+                    }
                     onClick={toggleMode}
                     className={cn(
                       !isChatMode &&
